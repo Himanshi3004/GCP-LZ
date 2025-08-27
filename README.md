@@ -67,14 +67,14 @@ Before deploying the landing zone, you need to create the GCS buckets for Terraf
 
 ```bash
 # Create state buckets (replace with your organization name)
-gsutil mb gs://netskope-terraform-state-dev
-gsutil mb gs://netskope-terraform-state-staging
-gsutil mb gs://netskope-terraform-state-prod
+gsutil mb gs://company-terraform-state-dev
+gsutil mb gs://company-terraform-state-staging
+gsutil mb gs://company-terraform-state-prod
 
 # Enable versioning
-gsutil versioning set on gs://netskope-terraform-state-dev
-gsutil versioning set on gs://netskope-terraform-state-staging
-gsutil versioning set on gs://netskope-terraform-state-prod
+gsutil versioning set on gs://company-terraform-state-dev
+gsutil versioning set on gs://company-terraform-state-staging
+gsutil versioning set on gs://company-terraform-state-prod
 ```
 
 ## Quick Start
@@ -119,7 +119,7 @@ gsutil versioning set on gs://netskope-terraform-state-prod
 |----------|-------------|---------|
 | `organization_id` | GCP Organization ID | `"123456789012"` |
 | `billing_account` | Billing Account ID | `"ABCDEF-123456-GHIJKL"` |
-| `project_id` | Management project ID | `"netskope-landing-zone-dev"` |
+| `project_id` | Management project ID | `"company-landing-zone-dev"` |
 | `environment` | Environment name | `"dev"` |
 
 ### Optional Variables
@@ -127,7 +127,7 @@ gsutil versioning set on gs://netskope-terraform-state-prod
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `default_region` | Default GCP region | `"us-central1"` |
-| `organization_name` | Organization name | `"netskope"` |
+| `organization_name` | Organization name | `"company"` |
 | `enable_audit_logs` | Enable audit logging | `true` |
 | `budget_alert_threshold` | Budget alert percentage | `80` |
 

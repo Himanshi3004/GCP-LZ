@@ -10,8 +10,8 @@ graph TB
     end
     
     subgraph "GCP Organization - Shared VPC Architecture"
-        subgraph "Host Project: netskope-network-{env}"
-            VPC_HOST[Shared VPC Host<br/>netskope-{env}-shared-vpc]
+        subgraph "Host Project: company-network-{env}"
+            VPC_HOST[Shared VPC Host<br/>company-{env}-shared-vpc]
             
             subgraph "us-central1 Region"
                 SUBNET_MAIN[Main Subnet<br/>10.0.0.0/24<br/>us-central1]
@@ -42,20 +42,20 @@ graph TB
         
         subgraph "Service Projects"
             subgraph "Development Environment"
-                DEV_PROJ1[netskope-app-dev-001]
-                DEV_PROJ2[netskope-data-dev-001]
+                DEV_PROJ1[company-app-dev-001]
+                DEV_PROJ2[company-data-dev-001]
                 DEV_GKE[GKE Cluster<br/>dev-cluster]
             end
             
             subgraph "Staging Environment"
-                STG_PROJ1[netskope-app-stg-001]
-                STG_PROJ2[netskope-data-stg-001]
+                STG_PROJ1[company-app-stg-001]
+                STG_PROJ2[company-data-stg-001]
                 STG_GKE[GKE Cluster<br/>staging-cluster]
             end
             
             subgraph "Production Environment"
-                PROD_PROJ1[netskope-app-prd-001]
-                PROD_PROJ2[netskope-data-prd-001]
+                PROD_PROJ1[company-app-prd-001]
+                PROD_PROJ2[company-data-prd-001]
                 PROD_GKE[GKE Cluster<br/>prod-cluster]
             end
         end

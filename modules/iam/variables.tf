@@ -6,7 +6,7 @@ variable "organization_id" {
 variable "organization_name" {
   description = "Organization name for resource naming"
   type        = string
-  default     = "netskope"
+  default     = "company"
 }
 
 variable "domain_name" {

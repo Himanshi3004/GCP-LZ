@@ -5,7 +5,7 @@
 ```mermaid
 graph TB
     subgraph "GCP Organization"
-        ORG[Organization<br/>netskope.com]
+        ORG[Organization<br/>example.com]
         
         subgraph "Folder Hierarchy"
             DEV_FOLDER[Development Folder]
@@ -19,7 +19,7 @@ graph TB
     end
     
     subgraph "Management Layer"
-        MGMT_PROJECT[Management Project<br/>netskope-mgmt-{env}]
+        MGMT_PROJECT[Management Project<br/>company-mgmt-{env}]
         ORG_POLICIES[Organization Policies]
         AUDIT_LOGS[Audit Logging]
         BILLING[Billing Export]
@@ -187,7 +187,7 @@ graph LR
 ```mermaid
 graph TB
     subgraph "Shared VPC Host Project"
-        VPC[VPC Network<br/>netskope-{env}-shared-vpc]
+        VPC[VPC Network<br/>company-{env}-shared-vpc]
         
         subgraph "Subnets"
             MAIN_SUBNET[Main Subnet<br/>10.0.0.0/24]

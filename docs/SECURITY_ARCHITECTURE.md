@@ -12,7 +12,7 @@ graph TB
         end
         
         subgraph "Google Cloud Identity"
-            CLOUD_IDENTITY[Cloud Identity<br/>netskope.com]
+            CLOUD_IDENTITY[Cloud Identity<br/>example.com]
             WORKFORCE_POOLS[Workforce Identity Pools]
             WORKLOAD_POOLS[Workload Identity Pools]
         end
@@ -166,13 +166,13 @@ graph TB
     
     subgraph "Google Cloud Identity Federation"
         subgraph "Workforce Identity Federation"
-            WORKFORCE_POOL[Workforce Identity Pool<br/>netskope-workforce]
+            WORKFORCE_POOL[Workforce Identity Pool<br/>company-workforce]
             AZURE_PROVIDER[Azure AD Provider<br/>SAML/OIDC]
             OKTA_PROVIDER[Okta Provider<br/>SAML]
         end
         
         subgraph "Workload Identity Federation"
-            WORKLOAD_POOL[Workload Identity Pool<br/>netskope-workloads]
+            WORKLOAD_POOL[Workload Identity Pool<br/>company-workloads]
             GITHUB_PROVIDER[GitHub Provider<br/>OIDC]
             GITLAB_PROVIDER[GitLab Provider<br/>OIDC]
         end

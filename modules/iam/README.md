@@ -129,7 +129,7 @@ module "iam" {
 - `environment` - Environment name (dev/staging/prod)
 
 ### Optional Variables
-- `organization_name` - Organization name for resource naming (default: "netskope")
+- `organization_name` - Organization name for resource naming (default: "company")
 - `customer_id` - Google Cloud Identity customer ID
 - `projects` - Projects from project factory module
 - `folder_ids` - Folder IDs for environment-specific bindings

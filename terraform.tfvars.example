@@ -4,11 +4,11 @@
 # Organization Configuration
 organization_id   = "123456789012"  # Replace with your GCP organization ID
 billing_account   = "ABCDEF-123456-GHIJKL"  # Replace with your billing account ID
-organization_name = "netskope"
-domain_name      = "netskope.com"
+organization_name = "company"
+domain_name      = "example.com"
 
 # Project Configuration
-project_id = "netskope-landing-zone-dev"  # Management project for landing zone
+project_id = "company-landing-zone-dev"  # Management project for landing zone
 
 # Regional Settings
 default_region = "us-central1"
@@ -92,7 +92,7 @@ enable_scc_auto_remediation = false
 
 # SCC Notification Configuration
 scc_notification_config = {
-  email_addresses = ["security-team@netskope.com"]
+  email_addresses = ["security-team@example.com"]
   # pubsub_topic = "scc-findings"  # Optional: custom Pub/Sub topic
   # slack_webhook = "https://hooks.slack.com/services/..."  # Optional: Slack webhook
 }
@@ -101,19 +101,19 @@ scc_notification_config = {
 
 # For Development Environment:
 # environment = "dev"
-# project_id = "netskope-landing-zone-dev"
+# project_id = "company-landing-zone-dev"
 # budget_alert_threshold = 50
 # enable_vpc_service_controls = false
 
 # For Staging Environment:
 # environment = "staging"
-# project_id = "netskope-landing-zone-stg"
+# project_id = "company-landing-zone-stg"
 # budget_alert_threshold = 70
 # enable_vpc_service_controls = true
 
 # For Production Environment:
 # environment = "prod"
-# project_id = "netskope-landing-zone-prd"
+# project_id = "company-landing-zone-prd"
 # budget_alert_threshold = 90
 # enable_vpc_service_controls = true
 # enable_audit_logs = true

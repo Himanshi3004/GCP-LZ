@@ -53,13 +53,13 @@ variable "environment" {
 variable "organization_name" {
   description = "Organization name for resource naming"
   type        = string
-  default     = "netskope"
+  default     = "company"
 }
 
 variable "domain_name" {
   description = "Organization domain name"
   type        = string
-  default     = "netskope.com"
+  default     = "example.com"
 }
 
 variable "default_labels" {

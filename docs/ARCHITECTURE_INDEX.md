@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides a comprehensive guide to the architecture documentation for the Netskope GCP Landing Zone. The landing zone implements a production-ready, enterprise-grade cloud foundation with security, compliance, and operational excellence built-in.
+This document provides a comprehensive guide to the architecture documentation for the Company GCP Landing Zone. The landing zone implements a production-ready, enterprise-grade cloud foundation with security, compliance, and operational excellence built-in.
 
 ## Architecture Documentation Structure
 

@@ -28,7 +28,7 @@ brew install tfsec
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/netskope/gcp-landing-zone.git
+git clone https://github.com/your-org/gcp-landing-zone.git
 cd gcp-landing-zone
 ```
 

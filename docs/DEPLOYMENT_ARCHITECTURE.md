@@ -5,7 +5,7 @@
 ```mermaid
 graph TB
     subgraph "Source Control"
-        GITHUB[GitHub Repository<br/>netskope/gcp-landing-zone]
+        GITHUB[GitHub Repository<br/>company/gcp-landing-zone]
         FEATURE_BRANCH[Feature Branches<br/>feature/module-name]
         MAIN_BRANCH[Main Branch<br/>Production Ready]
         RELEASE_TAGS[Release Tags<br/>v1.0.0, v1.1.0]
@@ -103,9 +103,9 @@ graph TB
 graph TB
     subgraph "Terraform State Management"
         subgraph "State Backends"
-            DEV_BACKEND[Development Backend<br/>gs://netskope-terraform-state-dev]
-            STG_BACKEND[Staging Backend<br/>gs://netskope-terraform-state-staging]
-            PROD_BACKEND[Production Backend<br/>gs://netskope-terraform-state-prod]
+            DEV_BACKEND[Development Backend<br/>gs://company-terraform-state-dev]
+            STG_BACKEND[Staging Backend<br/>gs://company-terraform-state-staging]
+            PROD_BACKEND[Production Backend<br/>gs://company-terraform-state-prod]
         end
         
         subgraph "State Locking"

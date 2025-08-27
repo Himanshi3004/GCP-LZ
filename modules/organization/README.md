@@ -33,8 +33,8 @@ module "organization" {
 
   organization_id   = "123456789012"
   billing_account   = "ABCDEF-123456-GHIJKL"
-  organization_name = "netskope"
-  domain_name       = "netskope.com"
+  organization_name = "company"
+  domain_name       = "example.com"
   environment       = "prod"
   
   enable_audit_logs            = true
@@ -53,8 +53,8 @@ module "organization" {
 ## Folder Structure
 
 ```
-Organization (netskope)
-├── netskope-dev/
+Organization (company)
+├── company-dev/
 │   ├── security/
 │   ├── networking/
 │   ├── data/
@@ -68,26 +68,26 @@ Organization (netskope)
 │   │   ├── infrastructure/
 │   │   └── analytics/
 │   └── shared-services/
-├── netskope-staging/
+├── company-staging/
 │   └── [same structure as dev]
-└── netskope-prod/
+└── company-prod/
     └── [same structure as dev]
 ```
 
 ## IAM Structure
 
 ### Environment-Level Access
-- `netskope-{env}-viewers@netskope.com`: Read-only access to environment folder
-- `netskope-{env}-developers@netskope.com`: Billing user access
-- `netskope-{env}-admins@netskope.com`: Administrative access
+- `company-{env}-viewers@example.com`: Read-only access to environment folder
+- `company-{env}-developers@example.com`: Billing user access
+- `company-{env}-admins@example.com`: Administrative access
 
 ### Department-Level Access
-- `netskope-{dept}-admins@netskope.com`: Folder admin access
-- `netskope-{dept}-editors@netskope.com`: Folder editor access
+- `company-{dept}-admins@example.com`: Folder admin access
+- `company-{dept}-editors@example.com`: Folder editor access
 
 ### Special Access
-- `netskope-security-team@netskope.com`: Security Center admin for security folders
-- `netskope-networking-team@netskope.com`: Network admin for networking folders
+- `company-security-team@example.com`: Security Center admin for security folders
+- `company-networking-team@example.com`: Network admin for networking folders
 
 ## Organization Policies
 

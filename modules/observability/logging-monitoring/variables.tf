@@ -134,13 +134,13 @@ variable "labels" {
 variable "security_email" {
   description = "Email address for security team notifications"
   type        = string
-  default     = "security-team@netskope.com"
+  default     = "security-team@example.com"
 }
 
 variable "operations_email" {
   description = "Email address for operations team notifications"
   type        = string
-  default     = "ops-team@netskope.com"
+  default     = "ops-team@example.com"
 }
 
 variable "slack_webhook_url" {
