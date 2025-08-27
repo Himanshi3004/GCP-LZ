@@ -1,0 +1,58 @@
+name: "VM Security Remediation Playbook"
+version: "1.0"
+description: "Automated remediation for VM security findings"
+
+triggers:
+  - category: "COMPUTE_INSTANCE_SECURITY"
+  - category: "VM_CONFIGURATION"
+
+actions:
+  - name: "enable_os_login"
+    condition: "finding.category == 'OS_LOGIN_DISABLED'"
+    steps:
+      - action: "set_metadata"
+        key: "enable-oslogin"
+        value: "TRUE"
+      - action: "restart_instance"
+        condition: "required"
+    
+  - name: "enable_shielded_vm"
+    condition: "finding.category == 'SHIELDED_VM_DISABLED'"
+    steps:
+      - action: "stop_instance"
+      - action: "enable_shielded_vm_config"
+        features:
+          - "secure_boot"
+          - "vtpm"
+          - "integrity_monitoring"
+      - action: "start_instance"
+    
+  - name: "remove_external_ip"
+    condition: "finding.category == 'EXTERNAL_IP_EXPOSED'"
+    steps:
+      - action: "backup_network_config"
+      - action: "remove_external_ip"
+      - action: "configure_nat_gateway"
+    
+  - name: "update_firewall_rules"
+    condition: "finding.category == 'OVERLY_PERMISSIVE_FIREWALL'"
+    steps:
+      - action: "audit_firewall_rules"
+      - action: "remove_permissive_rules"
+      - action: "apply_least_privilege_rules"
+
+notifications:
+  - type: "email"
+    recipients: ["security-team@company.com"]
+    events: ["action_completed", "action_failed"]
+  
+  - type: "slack"
+    webhook: "${slack_webhook_url}"
+    events: ["action_failed"]
+
+rollback:
+  enabled: true
+  retention_days: 30
+  triggers:
+    - "manual_request"
+    - "validation_failure"

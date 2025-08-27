@@ -1,0 +1,119 @@
+# GCP Landing Zone Configuration Example
+# Copy this file to terraform.tfvars and customize for your environment
+
+# Organization Configuration
+organization_id   = "123456789012"  # Replace with your GCP organization ID
+billing_account   = "ABCDEF-123456-GHIJKL"  # Replace with your billing account ID
+organization_name = "netskope"
+domain_name      = "netskope.com"
+
+# Project Configuration
+project_id = "netskope-landing-zone-dev"  # Management project for landing zone
+
+# Regional Settings
+default_region = "us-central1"
+default_zone   = "us-central1-a"
+
+# Environment
+environment = "dev"  # Options: dev, staging, prod
+
+# Default Labels
+default_labels = {
+  managed_by    = "terraform"
+  project       = "gcp-landing-zone"
+  cost_center   = "infrastructure"
+  owner         = "platform-team"
+  compliance    = "required"
+}
+
+# Security Settings
+enable_audit_logs              = true
+enable_vpc_service_controls    = true
+enable_organization_policies   = true
+
+# Networking Configuration
+shared_vpc_host_project_id = ""  # Leave empty to use project_id
+
+# Hybrid Connectivity (optional)
+enable_hybrid_connectivity = false
+enable_vpn                = false
+enable_interconnect       = false
+
+# VPN Configuration (if enabled)
+# vpn_config = {
+#   peer_ip                   = "203.0.113.1"
+#   shared_secret            = "your-shared-secret"
+#   peer_asn                 = 65001
+#   cloud_asn                = 64512
+#   advertised_route_priority = 100
+#   ike_version              = 2
+# }
+
+# Interconnect Configuration (if enabled)
+# interconnect_config = {
+#   interconnect_name    = "my-interconnect"
+#   type                = "DEDICATED"  # or "PARTNER"
+#   link_type           = "LINK_TYPE_ETHERNET_10G_LR"
+#   location            = "las-zone1-770"
+#   requested_link_count = 1
+# }
+
+# Network Security
+enable_network_security = true
+enable_cloud_armor     = true
+enable_cloud_ids       = false  # Requires additional setup
+enable_vpc_flow_logs   = true
+
+# Cost Management
+enable_billing_export     = true
+budget_alert_threshold    = 80
+
+# Module Feature Flags
+enable_organization_module  = true
+enable_project_factory     = true
+enable_iam_module          = true
+enable_identity_federation = false  # Optional: Enable for external identity providers
+enable_networking_module   = true
+enable_security_module     = true
+enable_observability_module = true
+enable_cost_management     = true
+enable_compute_module      = true
+enable_data_module         = true
+enable_cicd_module         = true
+enable_policy_module       = true
+enable_backup_module       = true
+enable_disaster_recovery_module = true
+
+# Security Command Center Configuration
+enable_scc_premium = true
+scc_severity_threshold = "MEDIUM"  # Options: LOW, MEDIUM, HIGH, CRITICAL
+scc_compliance_standards = ["CIS", "PCI-DSS", "NIST", "ISO27001"]
+enable_scc_auto_remediation = false
+
+# SCC Notification Configuration
+scc_notification_config = {
+  email_addresses = ["security-team@netskope.com"]
+  # pubsub_topic = "scc-findings"  # Optional: custom Pub/Sub topic
+  # slack_webhook = "https://hooks.slack.com/services/..."  # Optional: Slack webhook
+}
+
+# Environment-specific examples:
+
+# For Development Environment:
+# environment = "dev"
+# project_id = "netskope-landing-zone-dev"
+# budget_alert_threshold = 50
+# enable_vpc_service_controls = false
+
+# For Staging Environment:
+# environment = "staging"
+# project_id = "netskope-landing-zone-stg"
+# budget_alert_threshold = 70
+# enable_vpc_service_controls = true
+
+# For Production Environment:
+# environment = "prod"
+# project_id = "netskope-landing-zone-prd"
+# budget_alert_threshold = 90
+# enable_vpc_service_controls = true
+# enable_audit_logs = true

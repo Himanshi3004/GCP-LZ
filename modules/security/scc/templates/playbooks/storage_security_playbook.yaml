@@ -1,0 +1,56 @@
+name: "Storage Security Remediation Playbook"
+version: "1.0"
+description: "Automated remediation for Cloud Storage security findings"
+
+triggers:
+  - category: "STORAGE_BUCKET_SECURITY"
+  - category: "GCS_CONFIGURATION"
+
+actions:
+  - name: "enable_uniform_bucket_access"
+    condition: "finding.category == 'BUCKET_LEVEL_ACCESS_DISABLED'"
+    steps:
+      - action: "backup_iam_policy"
+      - action: "enable_uniform_bucket_level_access"
+      - action: "migrate_acls_to_iam"
+    
+  - name: "remove_public_access"
+    condition: "finding.category == 'PUBLIC_BUCKET_ACCESS'"
+    steps:
+      - action: "audit_bucket_permissions"
+      - action: "remove_allUsers_permissions"
+      - action: "remove_allAuthenticatedUsers_permissions"
+      - action: "apply_least_privilege_iam"
+    
+  - name: "enable_encryption"
+    condition: "finding.category == 'ENCRYPTION_DISABLED'"
+    steps:
+      - action: "create_kms_key"
+        key_ring: "storage-encryption"
+      - action: "enable_cmek_encryption"
+      - action: "rotate_existing_objects"
+    
+  - name: "configure_lifecycle_policy"
+    condition: "finding.category == 'NO_LIFECYCLE_POLICY'"
+    steps:
+      - action: "analyze_object_patterns"
+      - action: "create_lifecycle_rules"
+        rules:
+          - delete_after_days: 365
+          - transition_to_coldline: 30
+          - transition_to_archive: 90
+    
+  - name: "enable_versioning"
+    condition: "finding.category == 'VERSIONING_DISABLED'"
+    steps:
+      - action: "enable_object_versioning"
+      - action: "configure_version_lifecycle"
+
+notifications:
+  - type: "email"
+    recipients: ["data-team@company.com", "security-team@company.com"]
+    events: ["action_completed", "action_failed"]
+
+rollback:
+  enabled: true
+  retention_days: 30

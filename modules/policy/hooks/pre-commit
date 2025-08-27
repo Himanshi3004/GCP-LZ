@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# Pre-commit hook for Terraform policy validation
+set -e
+
+echo "Running Terraform policy validation..."
+
+# Check if terraform files have been modified
+terraform_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.tf$' || true)
+
+if [ -z "$terraform_files" ]; then
+    echo "No Terraform files to validate"
+    exit 0
+fi
+
+# Run terraform fmt check
+echo "Checking Terraform formatting..."
+if ! terraform fmt -check=true -diff=true .; then
+    echo "❌ Terraform files are not properly formatted"
+    echo "Run 'terraform fmt' to fix formatting issues"
+    exit 1
+fi
+
+# Run terraform validate
+echo "Validating Terraform configuration..."
+if ! terraform validate; then
+    echo "❌ Terraform validation failed"
+    exit 1
+fi
+
+# Run tfsec security scanning
+echo "Running security scan with tfsec..."
+if command -v tfsec >/dev/null 2>&1; then
+    if ! tfsec . --format json --out tfsec-results.json; then
+        echo "❌ Security scan failed"
+        echo "Check tfsec-results.json for details"
+        exit 1
+    fi
+else
+    echo "⚠️  tfsec not installed, skipping security scan"
+fi
+
+# Run policy validation with conftest
+echo "Validating policies with conftest..."
+if command -v conftest >/dev/null 2>&1; then
+    # Generate terraform plan
+    terraform plan -out=tfplan.binary
+    terraform show -json tfplan.binary > tfplan.json
+    
+    # Run policy tests
+    if ! conftest verify --policy modules/policy/policies/ tfplan.json; then
+        echo "❌ Policy validation failed"
+        rm -f tfplan.binary tfplan.json
+        exit 1
+    fi
+    
+    # Clean up
+    rm -f tfplan.binary tfplan.json
+else
+    echo "⚠️  conftest not installed, skipping policy validation"
+fi
+
+# Run policy tests
+echo "Running policy tests..."
+if command -v opa >/dev/null 2>&1; then
+    if ! opa test modules/policy/policies/ modules/policy/tests/; then
+        echo "❌ Policy tests failed"
+        exit 1
+    fi
+else
+    echo "⚠️  OPA not installed, skipping policy tests"
+fi
+
+echo "✅ All policy validations passed"
+exit 0

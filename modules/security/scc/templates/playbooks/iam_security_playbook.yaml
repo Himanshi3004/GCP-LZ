@@ -1,0 +1,65 @@
+name: "IAM Security Remediation Playbook"
+version: "1.0"
+description: "Automated remediation for IAM security findings"
+
+triggers:
+  - category: "IAM_POLICY_VIOLATION"
+  - category: "SERVICE_ACCOUNT_SECURITY"
+
+actions:
+  - name: "remove_overprivileged_bindings"
+    condition: "finding.category == 'OVERPRIVILEGED_IAM_BINDING'"
+    steps:
+      - action: "audit_iam_bindings"
+      - action: "identify_excessive_permissions"
+      - action: "create_custom_role"
+        principle: "least_privilege"
+      - action: "replace_binding"
+    
+  - name: "disable_service_account_keys"
+    condition: "finding.category == 'SERVICE_ACCOUNT_KEY_EXPOSED'"
+    steps:
+      - action: "list_service_account_keys"
+      - action: "disable_compromised_keys"
+      - action: "rotate_keys"
+      - action: "enable_workload_identity"
+    
+  - name: "remove_external_members"
+    condition: "finding.category == 'EXTERNAL_MEMBER_ACCESS'"
+    steps:
+      - action: "identify_external_members"
+      - action: "validate_business_justification"
+      - action: "remove_unauthorized_members"
+      - action: "implement_conditional_access"
+    
+  - name: "enforce_mfa"
+    condition: "finding.category == 'MFA_NOT_ENFORCED'"
+    steps:
+      - action: "create_access_level"
+        requirements:
+          - "mfa_required"
+      - action: "apply_conditional_iam_policy"
+    
+  - name: "cleanup_unused_service_accounts"
+    condition: "finding.category == 'UNUSED_SERVICE_ACCOUNT'"
+    steps:
+      - action: "analyze_usage_patterns"
+        timeframe: "90_days"
+      - action: "disable_unused_accounts"
+      - action: "schedule_deletion"
+        grace_period: "30_days"
+
+notifications:
+  - type: "email"
+    recipients: ["iam-team@company.com", "security-team@company.com"]
+    events: ["action_completed", "action_failed"]
+  
+  - type: "ticket"
+    system: "jira"
+    project: "SEC"
+    events: ["manual_review_required"]
+
+rollback:
+  enabled: true
+  retention_days: 90
+  approval_required: true
